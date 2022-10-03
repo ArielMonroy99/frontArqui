@@ -1,0 +1,83 @@
+<div class="container mt-5">
+    <button class="btn btn-add" (click)="control=1" data-bs-toggle="modal" data-bs-target="#addItem" > Add Item ✖️</button>
+    <table class="table table-bordered mt-5">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>{{item.name}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.stock }}</td>
+                <td>{{item.category.category}}</td>
+                <td>
+                    <button class="btn btn-primary me-2" (click)="setItem(item) " data-bs-toggle="modal" data-bs-target="#addItem">✏️</button>
+                    <button class="btn btn-danger" (click)="deleteItem(item.id)">❌</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="pagination">
+        <li class="page-item" (click)="previousPage()" *ngIf="page>1"><a class="page-link">Previous</a></li>
+        <li class="page-item" *ngFor="let pageNumber of totalArray">
+            <a class="page-link" [ngClass]="{active:pageNumber===page}" (click)="setPage(pageNumber)">{{pageNumber}}</a>
+        </li>
+        <li class="page-item" (click)="nextPage()" *ngIf="page<totalItems"><a class="page-link">Next</a></li>
+    </ul>
+</div>
+
+
+
+<!-- Modal -->
+<div #modal class="modal fade" id="addItem" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="addItemModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" *ngIf="control===1">Add New Item</h5>
+                <h5 class="modal-title" id="staticBackdropLabel" *ngIf="control===0">Edit Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="ItemForm" (ngSubmit)="saveValues()">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" formControlName="price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select formControlName="category" class="form-select">
+                            <option [ngValue]="category" *ngFor="let category of categories">{{category.category}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" formControlName="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="stock" formControlName="stock">
+                    </div>
+                    <div class="modal-footer">
+                        <button #closeModal id="closeModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <div #spinner id="spinner" class="spinner-border text-primary hidden" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary" [disabled]="!ItemForm.valid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

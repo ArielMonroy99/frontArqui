@@ -1,0 +1,17 @@
+.page-link{
+    cursor: pointer;
+}
+.hidden{
+    display: none;
+}
+.btn-add{
+    background-color: lightskyblue;
+    transition: background-color 2s ease-out 100ms
+}
+.btn-add:hover{
+    background-color: lightblue;
+}
+textarea{
+    resize: none;
+    height: 100px;
+}
