@@ -1,0 +1,18 @@
+.map {
+    width: 100%;
+    height: 400px;
+
+}
+.mapboxgl-canvas-container {
+
+    width: 100%;
+
+}
+table td {
+    width: 25%;
+    text-align: center;
+}
+
+table th{
+    text-align: center;
+}

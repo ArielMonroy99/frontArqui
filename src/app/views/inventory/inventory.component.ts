@@ -22,6 +22,8 @@ export class InventoryComponent implements OnInit {
   totalArray :any[] = []
   categories:any[] = []
   control = 1 
+  sortDir:string = "desc"
+  column: string = "id"
   ItemForm = new FormGroup({
     id: new FormControl(0),
     name: new FormControl('',[Validators.required,Validators.minLength(5)]),
@@ -49,7 +51,7 @@ export class InventoryComponent implements OnInit {
     )
   }
   getItems(){
-    this.itemService.getAllItems(this.page-1,this.size).subscribe(
+    this.itemService.getAllItems(this.page-1,this.size,this.column,this.sortDir).subscribe(
       data => {
         this.items = data.content
         this.totalItems = Math.ceil(data.totalElements/this.size)
@@ -129,5 +131,10 @@ export class InventoryComponent implements OnInit {
       )
     }
   }
-
+  orderData(column:string){
+    if(this.sortDir === "desc"){this.sortDir = "asc"}
+    else{this.sortDir = "desc"}
+    this.column = column
+    this.getItems()
+  }
 }

@@ -1,0 +1,41 @@
+<div class="container">
+    <form [formGroup]="orderForm" (ngSubmit)="sendOrder()">
+        <h1> Finish your order </h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Sub Total</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items">
+                    <td>{{item.item.name}}</td>
+                    <td>{{item.quantity}}</td>
+                    <td>{{item.item.price}}</td>
+                    <td>{{(item.quantity * item.item.price).toFixed(2)}}</td>
+                    <td>
+                        <button (click)="deleteItem(item)" class="btn btn-outline-dark"><i
+                                class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3">Total</td>
+                    <td colspan="2">{{total}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h1>Select the delivery address</h1>
+        <ul class="list-group">
+            <li *ngFor="let address of addresses" class="list-group-item" (click)="setAddress(address)">
+                <input  formContronlName="address" class="form-check-input me-2" type="radio" name="address"
+                [value]="address" [checked]="address.id===selectedAddress.id">
+                {{address.name}} --- {{address.address}}
+            </li>
+        </ul>
+        <button [disabled]="!(items.length>0) || !selectedAddress.id" class="btn btn-outline-success mt-3 mb-5">Send Order</button>
+    </form>
+</div>

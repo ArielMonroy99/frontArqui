@@ -10,6 +10,11 @@ import { InventoryComponent } from './views/inventory/inventory.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NavbarComponent } from './templates/navbar/navbar.component';
+import { ShopComponent } from './views/shop/shop.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AddressComponent } from './views/address/address.component';
+import { OrderComponent } from './views/order/order.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,6 +23,9 @@ import { NavbarComponent } from './templates/navbar/navbar.component';
     RegisterAdminComponent,
     InventoryComponent,
     NavbarComponent,
+    ShopComponent,
+    AddressComponent,
+    OrderComponent
     
   ],
   imports: [
@@ -25,7 +33,8 @@ import { NavbarComponent } from './templates/navbar/navbar.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

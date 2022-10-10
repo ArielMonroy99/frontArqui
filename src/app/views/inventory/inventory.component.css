@@ -6,12 +6,26 @@
 }
 .btn-add{
     background-color: lightskyblue;
-    transition: background-color 2s ease-out 100ms
+    transition: background-color 2s ease-out 100ms;
+    position:absolute;
+    right: 111px;
 }
 .btn-add:hover{
     background-color: lightblue;
+    
 }
 textarea{
     resize: none;
     height: 100px;
 }
+table{
+    width: 100%;
+}
+table th, table td{
+    width: calc(100% / 6);
+}
+.page-select{
+  width: 10%;
+  display: inline;
+}
+

@@ -1,0 +1,91 @@
+<div class="container mt-5">
+    <h1>Your addresses </h1>
+    <div class="filters mt-5">
+        <button class="btn btn-add btn-outline-success mb-1" data-bs-toggle="modal" data-bs-target="#addAddress"
+            (click)="newAddress()">Add Address</button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let address of addresses">
+                <td>{{address.id}}</td>
+                <td>{{address.name}}</td>
+                <td>{{address.address}}</td>
+                <td>
+                    <button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#viewAddress"
+                        (click)="createMarker(address.latitude,address.longitude,mapView)"><i
+                            class="fa-solid fa-info"></i></button>
+                    <button class="btn btn-outline-dark ms-3 me-3" (click)="setAddress(address)" data-bs-toggle="modal"
+                        data-bs-target="#addAddress"><i class="fa-solid fa-pen-to-square"></i></button>
+                    <button (click)="deleteAddress(address.id)" class="btn btn-outline-dark"><i class="fa-solid fa-trash"></i></button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<div class="modal fade" id="addAddress" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button #closeMV id="closeMV" type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <form [formGroup]="addressForm" (ngSubmit)="saveAddress()">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="address"> Address: </label>
+                        <input formControlName="address" class="form-control" type="text" id="address">
+                    </div>
+                    <label for="mapAdd" class="form-label">Location</label>
+                    <div id="mapAdd" class="map mt-3"></div>
+                  
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button [disabled]="!addressForm.valid || !marker" class="btn btn-outline-primary"
+                    type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="viewAddress" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="mapView" class="map">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>

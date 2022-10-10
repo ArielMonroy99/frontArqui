@@ -10,8 +10,8 @@ export class ItemService {
 
   constructor(private http:HttpClient) { }
 
-  getAllItems(page:number,size:number) {
-    return this.http.get<any>(this.url+"?page="+page+"&size="+size);
+  getAllItems(page:number,size:number,sort:string,sortDir:string) {
+    return this.http.get<any>(this.url+"?page="+page+"&size="+size+"&sort="+sort+"&sortDir="+sortDir);
   }
 
   getItemById(id: number) {
