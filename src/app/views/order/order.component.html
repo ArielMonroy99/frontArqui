@@ -36,6 +36,6 @@
                 {{address.name}} --- {{address.address}}
             </li>
         </ul>
-        <button [disabled]="!(items.length>0) || !selectedAddress.id" class="btn btn-outline-success mt-3 mb-5">Send Order</button>
+        <button [disabled]="((items) &&!(items.length>0)) || !selectedAddress.id" class="btn btn-outline-success mt-3 mb-5">Send Order</button>
     </form>
 </div>

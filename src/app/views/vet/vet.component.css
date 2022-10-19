@@ -1,0 +1,33 @@
+.active{
+    background-color: rgb(48, 70, 238);
+    transition: background-color 0.5s;
+    color: white;
+}
+.active:hover{
+    background-color: rgb(38, 55, 181);
+}
+.unactive{
+    background-color: rgb(151, 151, 151);
+    transition: background-color 0.5s;
+}
+.unactive:hover{
+    background-color: rgb(164, 164, 164);
+}
+#vet-schedule{
+    height: 38rem;
+    overflow-y: auto;
+} 
+#vet-data{
+    height: 38rem;
+}
+
+table th {
+    width: calc(100% / 7);
+    user-select: none;
+} 
+table td {
+    user-select: none;
+} 
+h2{
+    display: inline;
+}

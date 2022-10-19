@@ -17,6 +17,8 @@ export class UserService {
   updateUser(user: any){
     return this.http.put(this.url, user);
   }
-  
+  getUser(username:string){
+    return this.http.get(this.url+"/username?username="+username);
+  }
   
 }

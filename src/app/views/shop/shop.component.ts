@@ -10,28 +10,27 @@ import { Form } from '@angular/forms';
 })
 export class ShopComponent implements OnInit {
   @ViewChild('closeButton') closebutton:any
-
-  page : number = 0;
+  totalItems :number = 0
+  page : number = 1;
   size : number = 16;
   items:any[] = []
   itemOrder :ItemOrder
+  totalArray: any [] = []
   constructor(private itemService:ItemService) { }
 
   ngOnInit(): void {
     this.getItems()
     this.itemOrder = new ItemOrder()
   }
-
-  
-  
-  
   getItems(){
     this.itemService.getAllItems(this.page,this.size,"id","desc").subscribe(
       data=>{
         this.items = data.content
+        this.totalItems = Math.ceil(data.totalElements/this.size)
         console.log(data)
       }
     )
+    this.totalArray= this.getTotalPages()
   }
   setItem(item:any){
     console.log(item)
@@ -57,6 +56,24 @@ export class ShopComponent implements OnInit {
     this.itemOrder = new ItemOrder()
     localStorage.setItem('cart',JSON.stringify(cart))
   }
-
+  getTotalPages():number[]{
+    console.log(this.page, this.totalItems)
+    if(this.page === this.totalItems) return [this.totalItems-4,this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems]
+    if(this.page === (this.totalItems-1)) return [this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems,this.totalItems+1]
+    if(this.page <5) return [1,2,3,4,5]
+    return [this.page-2,this.page-1,this.page,this.page+1,this.page+2]
+  }
+  setPage(page:number){
+    this.page = page
+    this.getItems()
+  }
+  nextPage(){
+    this.page++
+    this.getItems()
+  }
+  previousPage(){
+    this.page--
+    this.getItems()
+  }
 
 }

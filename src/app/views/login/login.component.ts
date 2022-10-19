@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
     password: new FormControl('',[Validators.required])
    }
   )
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private userService: UserService) { }
 
   
   ngOnInit(): void { 
@@ -29,6 +31,14 @@ export class LoginComponent implements OnInit {
         console.table(data)
         this.token = data;
         localStorage.setItem("accessToken",JSON.stringify(this.token))
+        
+        this.userService.getUser(this.loginForm.get("username").value).subscribe(data =>{
+          localStorage.setItem("user", JSON.stringify(data));
+          Swal.fire({
+            title: 'Login Succesfuly',
+            icon: 'success'
+          })
+        })
     
       }
     )

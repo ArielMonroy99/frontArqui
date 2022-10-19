@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="row">
+        <div id="vet-list" class="col-5 border rounded pt-3">
+            <div class="card mb-3" *ngFor="let vet of vets" (click)="setVet(vet)">
+                <img src="../../../assets/user-3296.svg" id="user-icon" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{vet.name}} {{vet.lastname}}</h5>
+                    <p class="card-text">{{vet.idNumber}}</p>
+                    <p class="card-text"><small class="text-muted">Phone: {{vet.phone}}</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-7 border rounded">
+            <label class="form-label mt-3">WEEK</label>
+            <select class="form-control" (change)="setWeek($event)"> 
+                <option value="1">This week</option>
+                <option value="2">Next week</option>
+            </select>
+            <table class="table table-bordered mt-3" *ngIf="schedule">
+                <thead>
+                    <tr>
+                        <th>Hour</th>
+                        <th>Mon</th>
+                        <th>Tues</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sche of schedule; index as i">
+                        <td> {{sche[0].hour}} </td>
+                        <td *ngFor="let schedule of sche" (click)="changeState(schedule)"
+                            [ngClass]="{'avaliable': schedule.avaliable === 1,'taken': schedule.avaliable ===2,  'unavaliable':schedule.avaliable===0}">
+                            <span *ngIf="schedule.avaliable === 0">Unvaliable</span>
+                            <span *ngIf="schedule.avaliable === 1">Avaliable</span>
+                            <span *ngIf="schedule.avaliable === 2">Taken</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

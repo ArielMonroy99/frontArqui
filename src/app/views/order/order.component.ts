@@ -5,6 +5,7 @@ import { AddressService } from 'src/app/services/address.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -15,7 +16,9 @@ export class OrderComponent implements OnInit {
   total : number = 0;
   selectedAddress : any = {}
   addresses : any[] = [];
-  constructor(private addressService : AddressService, private orderService : OrderService) { }
+  constructor(private addressService : AddressService, 
+              private orderService : OrderService,
+              private router: Router) { }
 
   orderForm: FormGroup;
 
@@ -65,9 +68,7 @@ export class OrderComponent implements OnInit {
       items : this.items,
       total : this.total,
       address : this.selectedAddress,
-      user: {
-        id : 1
-      }
+      user: JSON.parse(localStorage.getItem("user"))
     }
     this.orderService.saveOrder(order).subscribe(
       data => {
@@ -75,6 +76,10 @@ export class OrderComponent implements OnInit {
           title: 'Order save succesfully!',
           text: 'Thanks for buy with us!',
         })
+        this.items=[]
+        localStorage.removeItem("cart")
+        this.router.navigate(['shop'])
+        
       },
       error=>{
         Swal.fire({

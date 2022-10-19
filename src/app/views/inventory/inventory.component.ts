@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category.service';
 import { ItemService } from '../../services/item.service';
 import swal from 'sweetalert2';
-import { identifierName } from '@angular/compiler';
 
 @Component({
   selector: 'app-inventory',
@@ -38,10 +37,7 @@ export class InventoryComponent implements OnInit {
   ngOnInit(): void {
     this.getItems()
     this.getCategories()
-
   }
-
-  
   getCategories(){
     this.categoryService.getAllCategories().subscribe(
       data =>{

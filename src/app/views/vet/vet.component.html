@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-4">
+            <div class="container border rounded p-3" id="vet-data">
+                <h2>Vet Data</h2>
+                <form action="" [formGroup]="vetForm">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input formControlName="name" id="name" type="text" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="form-label">Lastname</label>
+                        <input formControlName="lastname" id="lastname" type="text" class="form-control" >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address" class="form-label">Address</label>
+                        <input formControlName="address" id="address" type="text" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input formControlName="phone" id="phone" type="number" class="form-control" >
+                    </div>
+                    <div class="form-group">
+                        <label for="idNumber" class="form-label">ID Number</label>
+                        <input formControlName="idNumber" id="idNumber" type="text" class="form-control" >
+                    </div>
+                    <button [disabled]="!vetForm.valid " type="button" (click)="saveVet()" class="btn btn-outline-success mt-3 ">Save</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="container border rounded p-3" id="vet-schedule">
+                <h2>Schedule</h2>
+                <button class="btn btn-outline-success" (click)="resetSchedule()"> Reset</button>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Hour</th>
+                            <th>Mon</th>
+                            <th>Tues</th>
+                            <th>Wed</th>
+                            <th>Thu</th>
+                            <th>Fri</th>
+                            <th>Sat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sche of schedule; index as i">
+                            <td> {{sche[0].hour}} </td>
+                            <td *ngFor="let schedule of sche" (click)="changeState(schedule)"
+                                [ngClass]="{'active': schedule.avaliable, 'unactive':!schedule.avaliable}">
+                                <span *ngIf="schedule.avaliable">True</span>
+                                <span *ngIf="!schedule.avaliable">False</span>
+                                 </td>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

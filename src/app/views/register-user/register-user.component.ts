@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
@@ -32,6 +33,10 @@ export class RegisterUserComponent implements OnInit {
     this.userService.saveUser(user).subscribe(
       next=>{
         console.log(next)
+        Swal.fire({
+          title: 'User register succesfuly',
+          icon: 'success'
+        })
       }
     )
   }

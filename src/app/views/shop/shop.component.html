@@ -32,10 +32,19 @@
                 </div>
             </div>
         </div>
+        <ul class="pagination">
+            <li class="page-item" (click)="previousPage()" *ngIf="page>1"><a class="page-link">Previous</a></li>
+            <li class="page-item" *ngFor="let pageNumber of totalArray">
+                <a class="page-link" [ngClass]="{active:pageNumber===page}" (click)="setPage(pageNumber)">{{pageNumber}}</a>
+            </li>
+            <li class="page-item" (click)="nextPage()" *ngIf="page<totalItems"><a class="page-link">Next</a></li>
+        </ul>
     </div>
+    
 </section>
 <!-- Footer-->
 <footer class="py-5 bg-dark">
+   
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
 </footer>
 

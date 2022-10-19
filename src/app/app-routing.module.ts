@@ -7,7 +7,9 @@ import { RegisterUserComponent } from './views/register-user/register-user.compo
 import { ShopComponent } from './views/shop/shop.component';
 import { AddressComponent } from './views/address/address.component';
 import { OrderComponent } from './views/order/order.component';
-
+import { VetComponent } from './views/vet/vet.component';
+import { AppointmentComponent } from './views/appointment/appointment.component';
+import { ReportsComponent } from './views/reports/reports.component';
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'inventory', component: InventoryComponent},
@@ -15,7 +17,10 @@ const routes: Routes = [
   { path: 'registeradmin', component: RegisterAdminComponent},
   { path: 'shop', component: ShopComponent} ,
   { path: 'address', component: AddressComponent},
-  { path: 'order', component: OrderComponent}
+  { path: 'order', component: OrderComponent},
+  { path: 'vet', component: VetComponent},
+  { path: 'appointment', component: AppointmentComponent},
+  { path: 'reports', component: ReportsComponent}
 ];
 
 @NgModule({
