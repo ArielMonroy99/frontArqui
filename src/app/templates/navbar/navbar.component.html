@@ -10,29 +10,45 @@
             <a class="nav-link active" aria-current="page" routerLink="">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="inventory">Inventory</a>
+            <a class="nav-link active" aria-current="page" routerLink="shop">Shop</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+          <li class="nav-item" *ngIf="user.role==='GUEST'">
+            <a class="nav-link active" routerLink="registeruser">Register</a>
+          </li>
+          <li class="nav-item dropdown" *ngIf="!(user.role==='GUEST')">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
+              Other Sections
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" routerLink="shop">Shop</a></li>
-              <li><a class="dropdown-item" routerLink="order">Order</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" routerLink="login">Login</a></li>
-              <li><a class="dropdown-item" routerLink="registeruser">Register</a></li>
-              <li><a class="dropdown-item" routerLink="registeradmin">Register Administrator</a></li>
-              <li><a class="dropdown-item" routerLink="address">Address</a></li>
+              <div *ngIf="(user.role[0]==='USER')">
+                <li><a class="dropdown-item" routerLink="/my-appointments">Appointments</a></li>
+                <li><a class="dropdown-item" routerLink="/appointment">Make an Appointment</a></li>
+                <li><a class="dropdown-item" routerLink="/order">Shop Cart</a></li>
+                <li><a class="dropdown-item" routerLink="address">Address</a></li>
+                
+              </div>
+              <div *ngIf="user.role[0]==='ADMIN'">
+                <li><a class="dropdown-item" routerLink="inventory">Inventory</a></li>
+                <li><a class="dropdown-item" routerLink="vet">Veterinary</a></li>
+                <li><a class="dropdown-item" routerLink="reports">Reports</a></li>
+                <li><a class="dropdown-item" routerLink="registeradmin">Register Administrator</a></li>
+                <li><a class="dropdown-item" routerLink="order-list">Orders</a></li>
+              </div>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-          </li>
         </ul>
-        <form class="d-flex" role="search">
-          <button class="btn btn-outline-success" type="button" routerLink="order">
+        <form class="d-flex buttons" role="search">
+          <button class="btn btn-outline-info" type="button" routerLink="order">
+            <i class="fa-solid fa-cart-shopping"></i>
            shopping cart
+          </button>
+          <a *ngIf="user.role==='GUEST'" class="btn btn-outline-dark" routerLink="login">
+            <i class="fa-solid fa-right-to-bracket"></i>
+             Login
+          </a>
+          <button *ngIf="!(user.role==='GUEST')" (click)="logOut()" class="btn btn-outline-dark">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Log Out 
           </button>
         </form>
       </div>

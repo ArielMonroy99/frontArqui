@@ -16,6 +16,7 @@ export class OrderComponent implements OnInit {
   total : number = 0;
   selectedAddress : any = {}
   addresses : any[] = [];
+  user : any = {}
   constructor(private addressService : AddressService, 
               private orderService : OrderService,
               private router: Router) { }
@@ -23,8 +24,12 @@ export class OrderComponent implements OnInit {
   orderForm: FormGroup;
 
   ngOnInit(): void {
+  
+    this.user = localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")): {role: "GUEST"}
+    console.log(this.user);
     this.getItems()
     this.getAddress()
+    
   }
   getItems(){
     this.orderForm = new FormGroup({
@@ -49,7 +54,7 @@ export class OrderComponent implements OnInit {
     this.getItems()
   }
   getAddress(){
-    this.addressService.getAddresses(1).subscribe(
+    this.addressService.getAddresses(this.user.id).subscribe(
       data=>{
         this.addresses = data.content
         console.log(data.content);

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { config } from 'src/config';
 import { AddressModel } from '../models/Address';
@@ -8,17 +8,25 @@ const API_ULR = config.apiUrl;
 })
 export class AddressService {
 
-  constructor(private http: HttpClient) { }
+
+  accessToken = JSON.parse(localStorage.getItem('accessToken'))
+  headers : HttpHeaders = new HttpHeaders({
+    'Authorization': 'Bearer ' + this.accessToken.accessToken
+  })
+
+  constructor(private http: HttpClient) {
+    
+   }
 
   getAddresses(id: number) {
     return this.http.get<any>(`${API_ULR}/address?userId=${id}&page=0&size=10`);
   }
 
   saveAddress(address: any) {
-    return this.http.post<any>(`${API_ULR}/address`, address);
+    return this.http.post<any>(`${API_ULR}/address`, address,{headers: this.headers});
   }
   updateAddress(address:any){
-    return this.http.put<any>(`${API_ULR}/address`,address);
+    return this.http.put<any>(`${API_ULR}/address`,address,{headers: this.headers});
   }
 
   deleteAddress(id:number){

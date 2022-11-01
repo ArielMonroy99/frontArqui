@@ -1,0 +1,23 @@
+.table-main td{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.table-main th{
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.buttonery{
+    display: flex;
+    justify-content: space-around!important;
+    align-items: center;
+    margin: auto;
+}
+.info-span{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: right;
+    margin: auto;
+}

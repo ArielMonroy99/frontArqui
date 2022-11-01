@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/services/category.service';
 import { ItemService } from '../../services/item.service';
 import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inventory',
@@ -32,9 +34,12 @@ export class InventoryComponent implements OnInit {
     stock: new FormControl('',[Validators.required,Validators.min(1)])
 
   })
-  constructor(private itemService: ItemService, private categoryService:CategoryService) { }
+  constructor(private itemService: ItemService, private categoryService:CategoryService, private router: Router) { }
 
   ngOnInit(): void {
+    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
+    if(user.role[0] !== "ADMIN")
+      this.router.navigate(['home'])
     this.getItems()
     this.getCategories()
   }
@@ -82,9 +87,18 @@ export class InventoryComponent implements OnInit {
 
   getTotalPages():number[]{
     console.log(this.page, this.totalItems)
+    if(this.totalItems<=5){
+      let array : number[] = []
+      for(let i =0 ; i < this.totalItems; i++){
+        array.push(i+1)
+      }
+      console.log(array);
+      return array
+    }
     if(this.page === this.totalItems) return [this.totalItems-4,this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems]
     if(this.page === (this.totalItems-1)) return [this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems,this.totalItems+1]
     if(this.page <5) return [1,2,3,4,5]
+
     return [this.page-2,this.page-1,this.page,this.page+1,this.page+2]
   }
   
@@ -110,12 +124,21 @@ export class InventoryComponent implements OnInit {
     this.spinner.nativeElement.style.display = 'inline'
     if(this.control===1){
       this.itemService.saveItem(this.ItemForm.value).subscribe(
-        next=>{
+        (next:any)=>{
           this.spinner.nativeElement.style.display = 'none'
           this.closeModal?.nativeElement.click()
+          this.ItemForm.reset()
           this.getItems()
+        },
+        (error:any)=>{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
         }
       )
+      
     }else{
       console.table(this.ItemForm.value)
       this.itemService.updateItem(this.ItemForm.value).subscribe(

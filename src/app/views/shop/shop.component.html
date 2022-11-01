@@ -26,8 +26,12 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                       
-                        <div class="text-center"> <a class="btn btn-outline-dark mt-auto" (click)="setItem(iteml)" data-bs-toggle="modal" data-bs-target="#itemInfo" >Add to Cart ✖️ </a></div>
+                        <div class="text-center">
+                            <button *ngIf="(iteml.stock > 0)" class="btn btn-outline-dark mt-auto" (click)="setItem(iteml)" data-bs-toggle="modal" data-bs-target="#itemInfo">
+                                Add to Cart ✖️ 
+                            </button>
+                        </div>
+                        <span *ngIf="(iteml.stock<=0)" class="badge rounded-pill bg-danger text-bg-primary">Out of Stock</span>
                     </div>
                 </div>
             </div>
@@ -62,7 +66,7 @@
             Description : <p> {{itemOrder.item.description}}</p>
             Price : {{itemOrder.item.price}}$
             <input type="number" class="form-control" min="1"  [(ngModel)]="itemOrder.quantity" max="{{itemOrder.item.stock}}"  />
-            Total: {{itemOrder.item.price * itemOrder.quantity}}$
+            Total: {{(itemOrder.item.price * itemOrder.quantity).toFixed(2)}}$
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >Close</button>

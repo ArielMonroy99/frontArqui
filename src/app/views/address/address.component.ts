@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as mapboxgl from 'mapbox-gl';
 import { AddressModel } from 'src/app/models/Address';
 import { UserModel } from 'src/app/models/User';
@@ -16,7 +17,7 @@ import Swal from 'sweetalert2';
 export class AddressComponent implements OnInit {
 
   @ViewChild('closeMV') closeMv:any; 
-
+  user :any = {}
   mapView:mapboxgl.Map
   mapAdd:mapboxgl.Map
   marker: mapboxgl.Marker
@@ -26,9 +27,13 @@ export class AddressComponent implements OnInit {
   modalView : Element; 
   modalAdd: Element;
   control: number = 1;
-  constructor(private addressService: AddressService) { }
+  constructor(private addressService: AddressService, private router :Router) { }
 
   ngOnInit(): void {    
+    this.user = JSON.parse(localStorage.getItem('user'));
+    if(!this.user) {
+      this.router.navigate(['login'])
+    }
     (mapboxgl.accessToken as any) = environment.mapboxToken
      this.mapView = this.newMap("mapView");
 
@@ -98,9 +103,7 @@ export class AddressComponent implements OnInit {
         address: this.addressForm.value.address,
         latitude: this.marker.getLngLat().lat,
         longitude: this.marker.getLngLat().lng,
-        user: {
-          id: 1
-        }
+        user:this.user  
       }
       this.addressService.saveAddress(address).subscribe(
         (res) => {
@@ -111,7 +114,7 @@ export class AddressComponent implements OnInit {
     this.closeMv.nativeElement.click()
   }
   getAdresses(){
-    this.addressService.getAddresses(1).subscribe(
+    this.addressService.getAddresses(this.user.id).subscribe(
       (res) => {
         this.addresses = res.content
         console.log(res)

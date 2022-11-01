@@ -1,1 +1,64 @@
-<p>my-appointments works!</p>
+<div class="container mt-3 appointment-list">
+  <h2>List of Appointments your</h2>
+  <div
+    class="container"
+    *ngIf="appointments !== null && appointments.length === 0"
+  >
+    <h3>You didn't make any appointment</h3>
+  </div>
+  <div *ngIf="appointments.length > 0">
+    <ul class="list-group appointments">
+      <li class="list-group-item" *ngFor="let app of appointments">
+        <div class="space-between">
+            <span
+          ><span class="span-bold">Appointment date:</span> {{ app.date }}</span
+        >
+        <span
+          *ngIf="checkActive(app) === 1"
+          class="badge rounded-pill bg-info text-dark left-m__badge"
+          >Active</span
+        >
+        <span
+          *ngIf="checkActive(app) === 2"
+          class="badge rounded-pill bg-success text-white left-m__badge"
+          >Passed</span
+        >
+        <span
+          *ngIf="checkActive(app) === 3"
+          class="badge rounded-pill bg-danger text-dark left-m__badge"
+          >Canceled</span
+        >
+        </div>
+        <span><span class="span-bold">Hour:</span> {{ app.time }}</span>
+        <br />
+        <div class="space-between">
+          <span>
+            <span class="span-bold">Veterinary:</span>
+            {{ app.veterinary.name }} {{ app.veterinary.lastname }}</span>
+          <button
+            (click)="cancelAppointment(app)"
+            class="left-m__button"
+            *ngIf="!checkDate(app) && app.status !== 2">
+            Cancel
+          </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <ul class="pagination mt-3" *ngIf="!(totalItems > size)">
+    <li class="page-item" (click)="previousPage()" *ngIf="page > 1">
+      <a class="page-link">Previous</a>
+    </li>
+    <li class="page-item" *ngFor="let pageNumber of totalArray">
+      <a
+        class="page-link"
+        [ngClass]="{ active: pageNumber === page }"
+        (click)="setPage(pageNumber)"
+        >{{ pageNumber }}</a
+      >
+    </li>
+    <li class="page-item" (click)="nextPage()" *ngIf="page < totalItems">
+      <a class="page-link">Next</a>
+    </li>
+  </ul>
+</div>

@@ -7,7 +7,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterUserComponent } from './views/register-user/register-user.component';
 import { RegisterAdminComponent } from './views/register-admin/register-admin.component';
 import { InventoryComponent } from './views/inventory/inventory.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NavbarComponent } from './templates/navbar/navbar.component';
 import { ShopComponent } from './views/shop/shop.component';
@@ -18,7 +18,10 @@ import { VetComponent } from './views/vet/vet.component';
 import { AppointmentComponent } from './views/appointment/appointment.component';
 import { ReportsComponent } from './views/reports/reports.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { MyAppointmentsComponent } from './my-appointments/my-appointments.component';
+import { MyAppointmentsComponent } from './views/my-appointments/my-appointments.component';
+import { OrdersComponent } from './views/orders/orders.component';
+import { HomeComponent } from './views/home/home.component';
+import { AuthInterceptor } from './services/httpclient';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { MyAppointmentsComponent } from './my-appointments/my-appointments.compo
     VetComponent,
     AppointmentComponent,
     ReportsComponent,
-    MyAppointmentsComponent
+    MyAppointmentsComponent,
+    OrdersComponent,
+    HomeComponent
     
   ],
   imports: [
@@ -48,7 +53,11 @@ import { MyAppointmentsComponent } from './my-appointments/my-appointments.compo
     NgxChartsModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [{
+    provide : HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi   : true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

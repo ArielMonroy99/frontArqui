@@ -15,10 +15,10 @@ export class AppointmentService {
   saveAppointment(appointment:any){
     return this.http.post(`${API_URL}`,appointment);
   }
-  getAppointments(id:number){
-    return this.http.get(`${API_URL}/user/${id})`);
+  getAppointments(id:number,page:number,size:number){
+    return this.http.get<any>(`${API_URL}/user/${id}?page=${page}&size=${size}`);
   }
   cancelAppointment(cancelation: any){
-    return this.http.post(`${API_URL}/cancel`,cancelation)
+    return this.http.post(`${API_URL}/cancel`,cancelation,{responseType: 'text'});
   }
 }

@@ -10,6 +10,10 @@ import { OrderComponent } from './views/order/order.component';
 import { VetComponent } from './views/vet/vet.component';
 import { AppointmentComponent } from './views/appointment/appointment.component';
 import { ReportsComponent } from './views/reports/reports.component';
+import { MyAppointmentsComponent } from './views/my-appointments/my-appointments.component';
+import { OrdersComponent } from './views/orders/orders.component';
+import { HomeComponent } from './views/home/home.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'inventory', component: InventoryComponent},
@@ -20,7 +24,11 @@ const routes: Routes = [
   { path: 'order', component: OrderComponent},
   { path: 'vet', component: VetComponent},
   { path: 'appointment', component: AppointmentComponent},
-  { path: 'reports', component: ReportsComponent}
+  { path: 'reports', component: ReportsComponent},
+  { path: 'my-appointments', component: MyAppointmentsComponent},
+  { path: 'order-list', component: OrdersComponent},
+  { path: 'home', component: HomeComponent},
+  { path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 
 @NgModule({

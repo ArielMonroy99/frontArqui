@@ -37,3 +37,6 @@
 .taken:hover{
     background-color: rgb(253, 0, 0);
 }
+.schedule{
+    overflow-x: auto;
+}

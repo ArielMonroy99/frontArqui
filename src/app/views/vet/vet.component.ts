@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Item } from '../../models/Item';
 import { Schedule } from '../../models/Schedule';
 import { VeterinaryService } from '../../services/veterinary.service';
 
@@ -15,9 +14,12 @@ export class VetComponent implements OnInit {
 
   schedule = Schedule.newSchedule();
   vetForm: FormGroup
-  constructor(private vetService: VeterinaryService) { }
+  constructor(private vetService: VeterinaryService, private router : Router) { }
 
   ngOnInit(): void {
+    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
+    if(user.role[0] !== "ADMIN")
+      this.router.navigate(['home'])
     this.vetForm= new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       lastname: new FormControl('', [Validators.required,  Validators.minLength(3)]),
@@ -76,7 +78,9 @@ export class VetComponent implements OnInit {
     console.log(vet);
     
     this.vetService.saveVeterinary(vet).subscribe(
-      data => {
+       (data) => {
+        console.log(data);
+        
         Swal.fire({
           title: 'Success!',
           text: 'Vet saved',
@@ -85,7 +89,7 @@ export class VetComponent implements OnInit {
         this.resetSchedule()
         this.vetForm.reset()
       },
-      error => {
+      (error) => {
         Swal.fire({
           title: 'Error!',
           text: 'Vet not saved',

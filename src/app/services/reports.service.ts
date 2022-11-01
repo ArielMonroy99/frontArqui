@@ -10,7 +10,11 @@ export class ReportsService {
 
   constructor(private http: HttpClient) { }
 
-  productReports() {
-    return this.http.get<Record<string,any>>(`${API_ULR}/report/products`);
+  productReports(year:number) {
+    return this.http.get<Record<string,any>>(`${API_ULR}/report/products?year=${year}`);
+  }
+
+  veterinaryReports(year:number) {
+    return this.http.get<Record<string,any>>(`${API_ULR}/report/vets?year=${year}`);
   }
 }

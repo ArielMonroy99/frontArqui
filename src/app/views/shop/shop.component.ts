@@ -23,14 +23,15 @@ export class ShopComponent implements OnInit {
     this.itemOrder = new ItemOrder()
   }
   getItems(){
-    this.itemService.getAllItems(this.page,this.size,"id","desc").subscribe(
+    this.itemService.getAllItems(this.page-1,this.size,"id","desc").subscribe(
       data=>{
         this.items = data.content
         this.totalItems = Math.ceil(data.totalElements/this.size)
         console.log(data)
+        this.totalArray= this.getTotalPages()
       }
     )
-    this.totalArray= this.getTotalPages()
+   
   }
   setItem(item:any){
     console.log(item)
@@ -58,9 +59,18 @@ export class ShopComponent implements OnInit {
   }
   getTotalPages():number[]{
     console.log(this.page, this.totalItems)
+    if(this.totalItems<=5){
+      let array : number[] = []
+      for(let i =0 ; i < this.totalItems; i++){
+        array.push(i+1)
+      }
+      console.log(array);
+      return array
+    }
     if(this.page === this.totalItems) return [this.totalItems-4,this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems]
     if(this.page === (this.totalItems-1)) return [this.totalItems-3,this.totalItems-2,this.totalItems-1,this.totalItems,this.totalItems+1]
     if(this.page <5) return [1,2,3,4,5]
+
     return [this.page-2,this.page-1,this.page,this.page+1,this.page+2]
   }
   setPage(page:number){

@@ -1,0 +1,40 @@
+.appointments{
+    width: 700px;
+}
+.left-m__badge{
+    margin-left: 55%;
+}
+.left-m__button{
+    height:2rem ;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid rgba(192, 10, 10, 0.727);
+    color: rgba(192, 10, 10, 0.727);
+    transition: background-color 0.5s;
+    transition: color 0.5s;
+}
+.left-m__button:hover{
+    background-color: rgba(192, 10, 10, 0.727);
+    color: white;
+}
+.span-bold{
+    font-weight: bold;
+}
+.appointment-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+    
+}
+.space-between{
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+ul li {
+    min-height: 15vh;
+    max-height: 20vh;
+  }

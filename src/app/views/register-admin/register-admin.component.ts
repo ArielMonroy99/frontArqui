@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-admin',
@@ -10,9 +12,12 @@ import { UserService } from 'src/app/services/user.service';
 export class RegisterAdminComponent implements OnInit {
 
   userForm:FormGroup
-  constructor(private userService:UserService) { }
+  constructor(private userService:UserService, private router:Router) { }
 
   ngOnInit(): void {
+    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
+    if(user.role[0] !== "ADMIN")
+      this.router.navigate(['home'])
     this.userForm = new FormGroup({
     name: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
     lastname: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
@@ -31,6 +36,13 @@ export class RegisterAdminComponent implements OnInit {
     this.userService.saveUser(user).subscribe(
       next=>{
         console.log(next)
+        Swal.fire({
+          title: 'Admin Created Succesfuly',
+          icon: 'success'
+
+        }).then(result =>{
+          this.router.navigate(['login'])
+        })
       }
     )
   }
