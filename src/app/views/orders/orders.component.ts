@@ -21,9 +21,6 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
-    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
-    if(user.role[0] !== "ADMIN")
-      this.router.navigate(['home'])
   }
   page: number = 1; 
   size: number = 10;

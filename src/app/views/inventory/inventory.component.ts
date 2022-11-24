@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class InventoryComponent implements OnInit {
   @ViewChild("spinner") spinner: any
   @ViewChild("closeModal") closeModal: ElementRef | undefined
-  
+
   item:any
   page:number = 1
   size:number = 10
@@ -22,7 +22,7 @@ export class InventoryComponent implements OnInit {
   items:any[] = []
   totalArray :any[] = []
   categories:any[] = []
-  control = 1 
+  control = 1
   sortDir:string = "desc"
   column: string = "id"
   ItemForm = new FormGroup({
@@ -37,11 +37,16 @@ export class InventoryComponent implements OnInit {
   constructor(private itemService: ItemService, private categoryService:CategoryService, private router: Router) { }
 
   ngOnInit(): void {
-    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
-    if(user.role[0] !== "ADMIN")
-      this.router.navigate(['home'])
     this.getItems()
     this.getCategories()
+    // this.test()
+  }
+  test(){
+    this.categoryService.test().subscribe(
+      data=>{
+        alert(data)
+      }
+    )
   }
   getCategories(){
     this.categoryService.getAllCategories().subscribe(
@@ -101,7 +106,7 @@ export class InventoryComponent implements OnInit {
 
     return [this.page-2,this.page-1,this.page,this.page+1,this.page+2]
   }
-  
+
   setPage(page:number){
     this.page = page
     this.getItems()
@@ -117,7 +122,7 @@ export class InventoryComponent implements OnInit {
 
   setItem(item:any){
     this.ItemForm.setValue(item)
-    this.control = 0 
+    this.control = 0
   }
 
   saveValues(){
@@ -138,7 +143,7 @@ export class InventoryComponent implements OnInit {
           })
         }
       )
-      
+
     }else{
       console.table(this.ItemForm.value)
       this.itemService.updateItem(this.ItemForm.value).subscribe(

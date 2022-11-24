@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { multi } from 'src/app/models/multi';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
 import { ReportsService } from 'src/app/services/reports.service';
 import { Router } from '@angular/router';
@@ -11,9 +10,6 @@ import { Router } from '@angular/router';
 export class ReportsComponent implements OnInit {
   
   ngOnInit(): void {
-    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
-    if(user.role[0] !== "ADMIN")
-      this.router.navigate(['home'])
       this.getData() 
   }
   year = '2022'

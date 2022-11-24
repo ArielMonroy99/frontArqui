@@ -17,9 +17,6 @@ export class VetComponent implements OnInit {
   constructor(private vetService: VeterinaryService, private router : Router) { }
 
   ngOnInit(): void {
-    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
-    if(user.role[0] !== "ADMIN")
-      this.router.navigate(['home'])
     this.vetForm= new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       lastname: new FormControl('', [Validators.required,  Validators.minLength(3)]),

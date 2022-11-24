@@ -25,8 +25,7 @@ export class OrderComponent implements OnInit {
 
   ngOnInit(): void {
   
-    this.user = localStorage.getItem("user")? JSON.parse(localStorage.getItem("user")): {role: "GUEST"}
-    console.log(this.user);
+
     this.getItems()
     this.getAddress()
     

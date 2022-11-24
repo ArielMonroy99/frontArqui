@@ -1,77 +1,135 @@
 <!-- Header-->
 <header class="bg-dark py-5">
-    <div class="container px-4 px-lg-5 my-5">
-        <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder">VetStore</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
-        </div>
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">VetStore</h1>
+      <p class="lead fw-normal text-white-50 mb-0">
+        With this shop hompeage template
+      </p>
     </div>
+  </div>
 </header>
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            <div class="col mb-5" *ngFor="let iteml of items">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
-                            <h5 class="fw-bolder">{{iteml.name}}</h5>
-                            <!-- Product price-->
-                            {{iteml.price}}$
-                        </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <button *ngIf="(iteml.stock > 0)" class="btn btn-outline-dark mt-auto" (click)="setItem(iteml)" data-bs-toggle="modal" data-bs-target="#itemInfo">
-                                Add to Cart ✖️ 
-                            </button>
-                        </div>
-                        <span *ngIf="(iteml.stock<=0)" class="badge rounded-pill bg-danger text-bg-primary">Out of Stock</span>
-                    </div>
-                </div>
+  <div class="container px-4 px-lg-5 mt-5">
+    <div
+      class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
+    >
+      <div class="col mb-5" *ngFor="let iteml of items">
+        <div class="card h-100">
+          <!-- Product image-->
+          <img
+            class="card-img-top"
+            src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+            alt="..."
+          />
+          <!-- Product details-->
+          <div class="card-body p-4">
+            <div class="text-center">
+              <!-- Product name-->
+              <h5 class="fw-bolder">{{ iteml.name }}</h5>
+              <!-- Product price-->
+              {{ iteml.price }}$
             </div>
-        </div>
-        <ul class="pagination">
-            <li class="page-item" (click)="previousPage()" *ngIf="page>1"><a class="page-link">Previous</a></li>
-            <li class="page-item" *ngFor="let pageNumber of totalArray">
-                <a class="page-link" [ngClass]="{active:pageNumber===page}" (click)="setPage(pageNumber)">{{pageNumber}}</a>
-            </li>
-            <li class="page-item" (click)="nextPage()" *ngIf="page<totalItems"><a class="page-link">Next</a></li>
-        </ul>
-    </div>
-    
-</section>
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-   
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
-</footer>
-
-<!-- Button trigger modal -->
-  <!-- Modal -->
-  <div class="modal fade" id="itemInfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">{{itemOrder.item.name}}</h5>
-          <button #closeButton type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-            Description : <p> {{itemOrder.item.description}}</p>
-            Price : {{itemOrder.item.price}}$
-            <input type="number" class="form-control" min="1"  [(ngModel)]="itemOrder.quantity" max="{{itemOrder.item.stock}}"  />
-            Total: {{(itemOrder.item.price * itemOrder.quantity).toFixed(2)}}$
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"  >Close</button>
-          <button type="button" class="btn btn-primary" (click)="saveCart()">Understood</button>
+          </div>
+          <!-- Product actions-->
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+            <div class="text-center">
+              <button
+                *ngIf="iteml.stock > 0"
+                class="btn btn-outline-dark mt-auto"
+                (click)="setItem(iteml)"
+                data-bs-toggle="modal"
+                data-bs-target="#itemInfo"
+              >
+                Add to Cart ✖️
+              </button>
+            </div>
+            <span
+              *ngIf="iteml.stock <= 0"
+              class="b adge rounded-pill bg-danger text-bg-primary"
+              >Out of Stock</span
+            >
+          </div>
         </div>
       </div>
     </div>
+    <ul class="pagination">
+      <li class="page-item" (click)="previousPage()" *ngIf="page > 1">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item" *ngFor="let pageNumber of totalArray">
+        <a
+          class="page-link"
+          [ngClass]="{ active: pageNumber === page }"
+          (click)="setPage(pageNumber)"
+          >{{ pageNumber }}</a
+        >
+      </li>
+      <li class="page-item" (click)="nextPage()" *ngIf="page < totalItems">
+        <a class="page-link">Next</a>
+      </li>
+    </ul>
   </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p>
+  </div>
+</footer>
+
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="itemInfo"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          {{ itemOrder.item.name }}
+        </h5>
+        <button
+          #closeButton
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <img
+          class="card-img-top"
+          src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+          alt="..."
+        />
+        Description :
+        <p>{{ itemOrder.item.description }}</p>
+        Price : {{ itemOrder.item.price }}$
+        <input
+          type="number"
+          class="form-control"
+          min="1"
+          [(ngModel)]="itemOrder.quantity"
+          max="{{ itemOrder.item.stock }}"
+        />
+        Total: {{ itemOrder.item.price * itemOrder.quantity }}$
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveCart()">
+          Understood
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,24 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { config } from 'src/config';
+import { Config } from 'src/config';
 
-const API_ULR = config.apiUrl;
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
 
+  API_URL= Config.apiUrl + "/ms-store/order";
   constructor(private http: HttpClient) { }
 
   saveOrder(order: any) {
-    return this.http.post<any>(`${API_ULR}/order`, order);
+    return this.http.post<any>(this.API_URL, order);
   }
 
   getOrders(page:number,size:number) {
-    return this.http.get<any>(`${API_ULR}/order/all?page=${page}&size=${size}`);
+    return this.http.get<any>(`${this.API_URL}/all?page=${page}&size=${size}`);
   }
 
   updateOrderStatus(id:number, status:number) {
-    return this.http.put<any>(`${API_ULR}/order/${id}/status/${status}`, {});
+    return this.http.put<any>(`${this.API_URL}/${id}/status/${status}`, {});
   }
 }

@@ -1,24 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { config } from 'src/config';
-const API_URL = config.apiUrl + '/appointment';
+import { Config } from 'src/config';
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
-
+  API_URL = Config.apiUrl + '/ms-vet/appointment';
   constructor(private http: HttpClient) { }
 
   getAvaliableSchedule(id: number, startDate: string ,endDate: string){
-    return this.http.get(`${API_URL}?vetId=${id}&startDate=${startDate}&endDate=${endDate}`);
+    return this.http.get(`${this.API_URL}?vetId=${id}&startDate=${startDate}&endDate=${endDate}`);
   }
   saveAppointment(appointment:any){
-    return this.http.post(`${API_URL}`,appointment);
+    return this.http.post(`${this.API_URL}`,appointment);
   }
   getAppointments(id:number,page:number,size:number){
-    return this.http.get<any>(`${API_URL}/user/${id}?page=${page}&size=${size}`);
+    return this.http.get<any>(`${this.API_URL}/user/${id}?page=${page}&size=${size}`);
   }
   cancelAppointment(cancelation: any){
-    return this.http.post(`${API_URL}/cancel`,cancelation,{responseType: 'text'});
+    return this.http.post(`${this.API_URL}/cancel`,cancelation,{responseType: 'text'});
   }
 }

@@ -1,36 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SharedServiceService } from 'src/app/services/shared-service.service';
+import { KeycloakService } from 'keycloak-angular';
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  user : any = {}
-  constructor(private router: Router, private sharedService: SharedServiceService) {
-   
+  constructor(private router: Router, private keycloak: KeycloakService,private userService:UserService) {}
+  logout() {
+    this.keycloak.logout();
   }
-
-  ngOnInit(): void {
-    this.user = localStorage.getItem('user')? JSON.parse(localStorage.getItem('user')) : {role: 'GUEST'};
-    console.log(this.user.role)
+  user:any = {}
+  ngOnInit() {
+    alert(this.keycloak.getUserRoles())
+    this.keycloak.loadUserProfile().then((profile) => {
+      console.log(profile)
+      this.userService.getUser(profile.username).subscribe(
+        {
+          next: (data) => {
+            localStorage.setItem('user', JSON.stringify(data));
+          },
+          error: (err) => {
+            if(err.status===404){
+              this.user = {
+                email: profile.email,
+                name: profile.firstName,
+                lastname: profile.lastName,
+                username: profile.username,
+                phone: "7070707070",
+                password: "123456",
+              }
+              this.userService.saveUser(this.user).subscribe(
+                {
+                  next: (data) => {
+                    console.log(data)
+                    localStorage.setItem('user', JSON.stringify(data));
+                  }
+                }
+              )
+            }
+          }
+        }
+      )
+    });
   }
-  
-  log(){
-    console.log(this.user);
-  }
-
-  logOut(){
-    localStorage.removeItem('user')
-    localStorage.removeItem('accessToken')
-    this.user = undefined
-    window.location.reload();
-    this.router.navigate(['/home'])
-  }
-  
 
 }
-
-

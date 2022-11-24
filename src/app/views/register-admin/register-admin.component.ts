@@ -15,9 +15,7 @@ export class RegisterAdminComponent implements OnInit {
   constructor(private userService:UserService, private router:Router) { }
 
   ngOnInit(): void {
-    let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')): {role:['GUEST']}
-    if(user.role[0] !== "ADMIN")
-      this.router.navigate(['home'])
+  
     this.userForm = new FormGroup({
     name: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),
     lastname: new FormControl('',[Validators.required,Validators.pattern('[a-zA-Z ]*')]),

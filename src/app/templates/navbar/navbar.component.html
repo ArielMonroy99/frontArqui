@@ -1,57 +1,89 @@
 <nav class="navbar navbar-expand-lg bg-light" id="navbar">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="shop">Shop</a>
-          </li>
-          <li class="nav-item" *ngIf="user.role==='GUEST'">
-            <a class="nav-link active" routerLink="registeruser">Register</a>
-          </li>
-          <li class="nav-item dropdown" *ngIf="!(user.role==='GUEST')">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
-              Other Sections
-            </a>
-            <ul class="dropdown-menu">
-              <div *ngIf="(user.role[0]==='USER')">
-                <li><a class="dropdown-item" routerLink="/my-appointments">Appointments</a></li>
-                <li><a class="dropdown-item" routerLink="/appointment">Make an Appointment</a></li>
-                <li><a class="dropdown-item" routerLink="/order">Shop Cart</a></li>
-                <li><a class="dropdown-item" routerLink="address">Address</a></li>
-                
-              </div>
-              <div *ngIf="user.role[0]==='ADMIN'">
-                <li><a class="dropdown-item" routerLink="inventory">Inventory</a></li>
-                <li><a class="dropdown-item" routerLink="vet">Veterinary</a></li>
-                <li><a class="dropdown-item" routerLink="reports">Reports</a></li>
-                <li><a class="dropdown-item" routerLink="registeradmin">Register Administrator</a></li>
-                <li><a class="dropdown-item" routerLink="order-list">Orders</a></li>
-              </div>
-            </ul>
-          </li>
-        </ul>
-        <form class="d-flex buttons" role="search">
-          <button class="btn btn-outline-info" type="button" routerLink="order">
-            <i class="fa-solid fa-cart-shopping"></i>
-           shopping cart
-          </button>
-          <a *ngIf="user.role==='GUEST'" class="btn btn-outline-dark" routerLink="login">
-            <i class="fa-solid fa-right-to-bracket"></i>
-             Login
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" routerLink="shop"
+            >Shop</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="registeruser">Register</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Other Sections
           </a>
-          <button *ngIf="!(user.role==='GUEST')" (click)="logOut()" class="btn btn-outline-dark">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            Log Out 
-          </button>
-        </form>
-      </div>
+          <ul class="dropdown-menu">
+            <div>
+              <li>
+                <a class="dropdown-item" routerLink="/my-appointments"
+                  >Appointments</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/appointment"
+                  >Make an Appointment</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/order">Shop Cart</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="address">Address</a></li>
+            </div>
+            <div>
+              <li>
+                <a class="dropdown-item" routerLink="inventory">Inventory</a>
+              </li>
+              <li><a class="dropdown-item" routerLink="vet">Veterinary</a></li>
+              <li><a class="dropdown-item" routerLink="reports">Reports</a></li>
+              <li>
+                <a class="dropdown-item" routerLink="registeradmin"
+                  >Register Administrator</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="order-list">Orders</a>
+              </li>
+            </div>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex buttons" role="search">
+        <button class="btn btn-outline-info" type="button" routerLink="order">
+          <i class="fa-solid fa-cart-shopping"></i>
+          shopping cart
+        </button>
+        <a class="btn btn-outline-dark">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          Login
+        </a>
+        <button class="btn btn-outline-dark" (click)="logout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          Log Out
+        </button>
+      </form>
     </div>
-  </nav>
-
+  </div>
+</nav>

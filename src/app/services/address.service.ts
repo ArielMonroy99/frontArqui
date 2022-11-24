@@ -1,35 +1,24 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { config } from 'src/config';
-import { AddressModel } from '../models/Address';
-const API_ULR = config.apiUrl;
+import {Config} from "../../config";
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AddressService {
-
-
-  accessToken = JSON.parse(localStorage.getItem('accessToken'))
-  headers : HttpHeaders = new HttpHeaders({
-    'Authorization': 'Bearer ' + this.accessToken.accessToken
-  })
-
-  constructor(private http: HttpClient) {
-    
-   }
-
+  constructor(private http: HttpClient) {}
+  API_URL = Config.apiUrl + "/ms-store"
   getAddresses(id: number) {
-    return this.http.get<any>(`${API_ULR}/address?userId=${id}&page=0&size=10`);
+    return this.http.get<any>(`${this.API_URL}/address?userId=${id}&page=0&size=10`);
   }
 
   saveAddress(address: any) {
-    return this.http.post<any>(`${API_ULR}/address`, address,{headers: this.headers});
+    return this.http.post<any>(`${this.API_URL}/address`, address);
   }
-  updateAddress(address:any){
-    return this.http.put<any>(`${API_ULR}/address`,address,{headers: this.headers});
+  updateAddress(address: any) {
+    return this.http.put<any>(`${this.API_URL}/address`, address);
   }
 
-  deleteAddress(id:number){
-    return this.http.delete<any>(`${API_ULR}/address/${id}`);
+  deleteAddress(id: number) {
+    return this.http.delete<any>(`${this.API_URL}/address/${id}`);
   }
 }

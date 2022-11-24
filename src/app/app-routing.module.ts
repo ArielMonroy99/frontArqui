@@ -13,26 +13,74 @@ import { ReportsComponent } from './views/reports/reports.component';
 import { MyAppointmentsComponent } from './views/my-appointments/my-appointments.component';
 import { OrdersComponent } from './views/orders/orders.component';
 import { HomeComponent } from './views/home/home.component';
+import { AppAuthGuard } from './guard/app.auth.guard';
+import { ErrorComponent } from './views/error/error.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'inventory', component: InventoryComponent},
-  { path: 'registeruser', component: RegisterUserComponent},
-  { path: 'registeradmin', component: RegisterAdminComponent},
-  { path: 'shop', component: ShopComponent} ,
-  { path: 'address', component: AddressComponent},
-  { path: 'order', component: OrderComponent},
-  { path: 'vet', component: VetComponent},
-  { path: 'appointment', component: AppointmentComponent},
-  { path: 'reports', component: ReportsComponent},
-  { path: 'my-appointments', component: MyAppointmentsComponent},
-  { path: 'order-list', component: OrdersComponent},
-  { path: 'home', component: HomeComponent},
-  { path: '', redirectTo: 'home', pathMatch: 'full'}
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'inventory',
+    component: InventoryComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  {
+    path: 'registeruser',
+    component: RegisterUserComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['USER'] },
+  },
+  {
+    path: 'registeradmin',
+    component: RegisterAdminComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  { path: 'shop', component: ShopComponent },
+  {
+    path: 'address',
+    component: AddressComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['USER'] },
+  },
+  {
+    path: 'order',
+    component: OrderComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['USER'] },
+  },
+  {
+    path: 'vet',
+    component: VetComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  {
+    path: 'appointment',
+    component: AppointmentComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['USER'] },
+  },
+  {
+    path: 'reports',
+    component: ReportsComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  { path: 'my-appointments', component: MyAppointmentsComponent },
+  {
+    path: 'order-list',
+    component: OrdersComponent,
+    canActivate: [AppAuthGuard],
+    data: { roles: ['ADMIN'] },
+  },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'error', component: ErrorComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
